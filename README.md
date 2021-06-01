@@ -2,9 +2,6 @@
 
 Official MATLAB implementation of structural reference-free deconvolution and Bayesian inference (sRFDBI) algorithm.
 
-we propose a novel cancer diagnosis model through structural reference-free deconvolution and Bayesian inference (sRFDBI) on plasma cfDNA methylation profiles. Specifically, the structural reference-free deconvolution algorithm aims at exploiting the methylation signatures to predict the fraction of the tumor-derived cfDNA. Subsequently, Bayesian inference is introduced to make the final cancer diagnostic decision by excavating discriminative features from the predicted tumor fraction. To evaluate the performance of the tumor fraction prediction and the cancer diagnosis, we test the sRFDBI on an elaborately designed simulation dataset and real plasma samples, separately. The experimental results exhibit a Pearson correlation coefficient of 0.951 between the estimated and the true tumor fraction, which outperforms the current reference-based deconvolution approaches. Besides, the sRFDBI significantly ameliorates the diagnostic performance over the popular machine learning classifiers, including random forest, neural networks and support vector machine, on both simulation and real datasets. More importantly, the sRFDBI can effectively reduce the diagnostic bias when handling severely imbalanced datasets.
-
-
 ## Prerequisites
 
 MATLAB R2018b
