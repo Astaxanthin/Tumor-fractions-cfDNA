@@ -32,8 +32,10 @@ p=param.p; %L2-p
 lambda=param.lambda;
 
 %% objective function
-Omega = lambda*norm(mask.*H,'fro')^2;
-err(1)=calculate_2p_norm(X-W*H,p) + Omega;
+Omega = lambda*norm(mask.*H,'fro')^2
+% norm(X-W*H,'fro')^2
+% calculate_2p_norm(X-W*H,p) 
+err(1)=calculate_2p_norm(X-W*H,p)  + Omega;
 
 iter=1;
 while iter<param.maximum_iterations 
@@ -56,7 +58,7 @@ while iter<param.maximum_iterations
     
     iter=iter+1;
     Omega = lambda*norm(mask.*H,'fro')^2;
-    err(iter)=calculate_2p_norm(X-W*H,p) + Omega;
+    err(iter) = calculate_2p_norm(X-W*H,p)  + Omega;
     err(iter)
     
     if abs(err(iter-1)-err(iter))<param.convergence_threshold

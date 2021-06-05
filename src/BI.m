@@ -2,7 +2,7 @@ function [classifier_prob, classifier_prediction, sRFDBI_prob, sRFDBI_prediction
 
 gt_label = [];
 for i = 1:param.class_num
-    gt_label =  [gt_label, i*ones(1, param.train_sample_num(i))];
+    gt_label =  [gt_label, i*ones(1,param.train_sample_num(i))];
 end
 
 if strcmp(method, 'RF')  % Random forest

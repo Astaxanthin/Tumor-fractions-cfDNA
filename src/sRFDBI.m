@@ -1,7 +1,7 @@
-function sRFDBI_results = sRFDBI(train_data, test_data)
+function [classifier_prediction, sRFDBI_results] = sRFDBI(train_data, test_data)
+
 global param;
 
-%% preprocessing
 train_labels = train_data(end,:);
 [train_labels,sorted_train_index] = sort(train_labels);
 train_data = train_data(1:(end-1),sorted_train_index);
@@ -34,7 +34,7 @@ coarse_test_H =  deconvolution_with_reference(test_data, train_W, zeros(1,size(t
 [classifier_prob, classifier_prediction, sRFDBI_prob, sRFDBI_prediction] = BI(train_data,test_data, param.prior, coarse_train_H, coarse_test_H, param);
 
 %% refined tissue fraction
-refined_test_H =  deconvolution_with_reference(test_data, train_W, sRFDBI_prediction, param);
+refined_test_H = deconvolution_with_reference(test_data, train_W, sRFDBI_prediction, param);
 
 %% final results
 % Two rows: the first row is predicted labels, the second row is predicted tumor fraction.

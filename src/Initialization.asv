@@ -6,7 +6,7 @@ rand('seed',seed);
 file_dir = strcat('../data/',param.dataset_name,'/');
 
 if strcmp(param.dataset_name,'simulation_dataset')
-    param.cnv = 30;
+    param.
     train_data_dir = strcat(file_dir,'train_data.mat');
     test_data_dir = strcat(file_dir,'test_data.mat');
     load(train_data_dir);
