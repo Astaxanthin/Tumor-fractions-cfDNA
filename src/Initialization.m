@@ -7,13 +7,13 @@ file_dir = strcat('../data/',param.dataset_name,'/');
 
 if strcmp(param.dataset_name,'simulation_dataset')
     param.cnv = 30;
-    train_data_dir = strcat(file_dir,'train_data.mat');
-    test_data_dir = strcat(file_dir,'test_data.mat');
+    train_data_dir = strcat(file_dir,'CNV',num2str(param.cnv),'/train_data.mat');
+    test_data_dir = strcat(file_dir,'CNV',num2str(param.cnv),'/test_data.mat');
     load(train_data_dir);
     load(test_data_dir);
     
-    load(strcat(file_dir,'train_theta.mat'));
-    load(strcat(file_dir,'test_theta.mat'));
+    load(strcat(file_dir,'CNV',num2str(param.cnv),'/train_theta.mat'));
+    load(strcat(file_dir,'CNV',num2str(param.cnv),'/test_theta.mat'));
     evaluate_deconvolution_flag = true;
     
 elseif strcmp(param.dataset_name,'real_dataset')
