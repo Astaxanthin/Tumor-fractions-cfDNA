@@ -7,6 +7,9 @@ file_dir = strcat('../data/',param.dataset_name,'/');
 
 if strcmp(param.dataset_name,'simulation_dataset')
     param.cnv = 30;
+    
+    disp(['Dataset: simulation dataset']);
+    disp(['CNV event probability = ' num2str(param.cnv), '%']);
     train_data_dir = strcat(file_dir,'CNV',num2str(param.cnv),'/train_data.mat');
     test_data_dir = strcat(file_dir,'CNV',num2str(param.cnv),'/test_data.mat');
     load(train_data_dir);
@@ -17,10 +20,12 @@ if strcmp(param.dataset_name,'simulation_dataset')
     evaluate_deconvolution_flag = true;
     
 elseif strcmp(param.dataset_name,'real_dataset')
+    disp(['Dataset: real dataset']);
     data_dir = strcat(file_dir,'real_data.mat');
     load(data_dir);
     [train_data,test_data] = random_data_split(real_data);
     param.top_k = 531; 
+    disp(['The number of markers: ',  num2str(param.top_k)]);
     marker_index = select_dscore_markers(train_data);  % select Top-K markers by D-score
     train_data = train_data([marker_index,end],:);
     test_data = test_data([marker_index,end],:);

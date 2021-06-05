@@ -8,7 +8,7 @@ N2=size(test_data,2);
 test_H = zeros(R,N2);
 
 for i = 1:size(test_data,2)
-    i
+%     i
     k = predicted_label(i);
     if k ==0  % no structural constraints
         mask =zeros(1,R);

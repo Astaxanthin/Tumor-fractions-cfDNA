@@ -3,7 +3,7 @@ clear;
 
 %% initialization
 global param;
-param.dataset_name = 'real_dataset';  % 'simulation_dataset' and 'real_dataset'
+param.dataset_name = 'real_dataset';  % choose a dataset: 'simulation_dataset' and 'real_dataset'
 Initialization;  % data loading, parameter setting, etc.
 
 %% sREDBI algorithm
@@ -24,11 +24,15 @@ save(strcat(save_path,'sRFDBI_results.mat'), 'sRFDBI_results');
 
 %% evaluate deconvolution (simulation dataset only)
 if evaluate_deconvolution_flag
-    [test_MAE,  test_RMSE, test_PCC] = evaluate_deconvolution(sRFDBI_results, test_theta)
+    fprintf('Evaluating the deconvolution performance\n');
+    [test_MAE,  test_RMSE, test_PCC] = evaluate_deconvolution(sRFDBI_results, test_theta);
+    disp(['MAE=' num2str(test_MAE)]);
+    disp(['RMSE=' num2str(test_RMSE)]);
+    disp(['PCC=' num2str(test_PCC)]);
 end
 
 %% evaluate diagnosis
-confusion_matrix = compute_confusion_matrix(sRFDBI_results(1,:),param.test_sample_num)
-ACC = diag(confusion_matrix)'./param.test_sample_num;
-average_ACC = mean(ACC)
+fprintf('Evaluating the diagnostic performance...\n');
+average_ACC = evaluate_diagnosis(sRFDBI_results, param);
+disp(['average ACC=' num2str(average_ACC)]);
 
