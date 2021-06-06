@@ -41,5 +41,5 @@ The 'data' directory contains two exemplary datasets: simulation dataset and rea
 The final results for each dataset contains two rows: the first row is cancer diagnostic results and the second row indicates tumor fraction prediction.
 
 ## References
-If you find this work or code useful, please cite:
+If you find this work or code useful, please cite this study. The citation will be updated soon.
 
