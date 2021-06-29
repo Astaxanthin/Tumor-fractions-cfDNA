@@ -30,6 +30,7 @@ fprintf('This may take a while...\n');
 
 %% coarse tissue fraction (deconcolution without structural constraints)
 fprintf('2. Estimating coarse tissue fractions\n');
+fprintf('This may take a while...\n');
 coarse_train_H =  deconvolution_with_reference(train_data, train_W, zeros(1,size(train_data,2)), param);
 coarse_test_H =  deconvolution_with_reference(test_data, train_W, zeros(1,size(test_data,2)), param);
 

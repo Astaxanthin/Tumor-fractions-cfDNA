@@ -3,7 +3,7 @@ clear;
 
 %% initialization
 global param;
-param.dataset_name = 'real_dataset';  % choose a dataset: 'simulation_dataset' and 'real_dataset'
+param.dataset_name = 'simulation_dataset';  % choose a dataset: 'simulation_dataset' and 'real_dataset'
 Initialization;  % data loading, parameter setting, etc.
 
 %% sREDBI algorithm

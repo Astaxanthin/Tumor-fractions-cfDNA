@@ -24,7 +24,7 @@ elseif strcmp(param.dataset_name,'real_dataset')
     data_dir = strcat(file_dir,'real_data.mat');
     load(data_dir);
     [train_data,test_data] = random_data_split(real_data);
-    param.top_k = 531; 
+    param.top_k = 100; 
     disp(['The number of markers: ',  num2str(param.top_k)]);
     marker_index = select_dscore_markers(train_data);  % select Top-K markers by D-score
     train_data = train_data([marker_index,end],:);
@@ -41,4 +41,4 @@ param.cancer_pattern_num = 3;
 param.healthy_pattern_num = 10;
 param.convergence_threshold = 1e-2;
 param.maximum_iterations = 1000;
-param.prior = 'RF';  %RF, NN, SVM, Equal
+param.prior = 'SVM';  %RF, NN, SVM, Equal

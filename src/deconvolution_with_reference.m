@@ -7,7 +7,7 @@ N2=size(test_data,2);
 
 test_H = zeros(R,N2);
 
-for i = 1:size(test_data,2)
+parfor i = 1:size(test_data,2)
 %     i
     k = predicted_label(i);
     if k ==0  % no structural constraints
@@ -27,6 +27,7 @@ for i = 1:size(test_data,2)
     beq = [1,0];
     lb = zeros(1,R);
     ub = ones(1,R);
-    test_H(:,i) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub);
+    options = optimoptions('fmincon','Display','none');
+    test_H(:,i) = fmincon(fun,x0,A,b,Aeq,beq,lb,ub,[],options);
 end
 end
