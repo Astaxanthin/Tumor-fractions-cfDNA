@@ -1,44 +1,51 @@
-# Structural Referen-free Deconvolution and Bayesian Inference (sRFDBI)
+# Tumor fractions deciphered from circulating cell-free DNA methylation for cancer early diagnosis
 
-Official MATLAB implementation of structural reference-free deconvolution and Bayesian inference (sRFDBI) algorithm.
-
+Official MATLAB code for the paper "Tumor fractions deciphered from circulating cell-free DNA methylation for cancer early diagnosis".
 
 ## Prerequisites
 
 MATLAB R2018b
 
-## Usage
-```
-run main.m
-```
-*Initialization.m* is a parameter configuration file.
+## Experimental settings
 
-Options in the parameter configuration file:
-+ *file_dir* : The directory of data. 
-+ *param* : The parameters for the sRFDBI algorithm, including $p$ in $l_{2,p}$ norm 
-Coefficient of structural penalty $\lambda$ 
-The number of cancer methylation patterns 
-The number of healthy methylation patterns 
-Convergence threshold $\varepsilon$ 
-Maximum iterations $T$ and prior. 
-If *simulation_data* is used, *cnv* is available to choose the probability of CNV event.
-If *real_data* is used, *top-k* is available to set the number of methylation markers.
+The experiments consist of two parts: deconvolution and diagnosis, each is performed on both simulation dataset and real dataset.
+
+In the deconvolution step, the semi-reference-deconvolution is first implemented on cfDNA methylation data to obtain a reference database, which is then utilized to deconvolve the test samples to decipher their fraction vectors. To estimate the tumor fractions of real samples, the reference database learned from simulation dataset is directly utilized for the deconvolution of real cfDNA methylation data from cancer patients.
+
+In the diagnosis step, the diagnostic prior is first obtained from the machine learning based classifiers, and then the conditional probability distribution is computed from the tumor components in the fraction vectors of each test sample. The prior and the conditional probability distribution are combined to make the final Bayesian diagnostic decision.
+
+
+
+## Usage
+
++ *Deconvolution* : 
+  ```
+  run deconvolution.m
+  ```
++ *Diagnosis on simulation dataset* : 
+  ```
+  run diagnosis_on_simulation_dataset.m
+  ```
++ *Diagnosis on real dataset* : 
+  ```
+  run diagnosis_on_real_dataset.m
+  ```
 
 ## File instruction
 
-The 'data' directory contains two exemplary datasets: simulation dataset and real dataset.
+
+The 'data' directory contains two type of datasets: simulation dataset and real dataset.
 
 + *simulation_dataset*
 
-  The simulation data contains three datasets with the CNV event probabilities of 10%, 30% and 50%. Each dataset consists of 3000 training (500 for each category) and 1800 test (300 for each category) samples. 
+  The simulation data contains four datasets with the CNV event probabilities of 0, 10%, 30% and 50%. Each dataset consists of 1200 training (200 for each category) and 1200 test (200 for each category) samples.
 
-  *train_data* is a $(K_s+1) \times N_1$ matrix. The first $K_s$ rows represent methylation data ( $N_1$ samples, each with $K_s$ dimensional methylation levels, i.e. $\beta$ value). The last row suggests the category of each training sample. Similarly, *test_data* is a $(K_s+1) \times N_2$ matrix. *train_theta* and *test_theta* denote the simulated tumor fraction of training and test samples.
+  *train_data* is a $K_s \times N$ matrix. $N$ suggests the number of samples, each with $K_s$ dimensional methylation levels, i.e. $\beta$ value. Similarly, *test_data* is a $K_s \times N$ matrix. *train_theta* and *test_theta* denote the simulated tumor fraction of training and test samples.
 
 + *real_dataset*
   
-  *real_data* is a $(K_r+1) \times N$ matrix. The first $K_r$ rows represent methylation data ( $N$ samples, each with $K_r$ dimensional methylation levels, i.e. $\beta$ value). The last row suggests the category of each sample.
+  The real data mainly contains three datasets: chip-based methylation data from GSE122126, GSE108462 and GSE129374, Xu et al. data and Chen et al. data. The chip-based data is formulated in file *validation_real_data.* *.
 
-The final results for each dataset contains two rows: the first row is cancer diagnostic results and the second row indicates tumor fraction prediction.
 
 ## References
 If you find this work or code useful, please cite this study. The citation will be updated soon.
