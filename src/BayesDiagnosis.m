@@ -7,7 +7,7 @@ if strcmp(method, 'RF')
 %     model = TreeBagger(100, train_data', gt_label', 'Method','classification');
     
     % load example models
-    load(strcat('./data/real_data/Chen_data/late_stage_training/result/enh/RF/example_models/RFmodel_',num2str(j)));
+    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/RF/example_models/RFmodel_',num2str(j)));
     model = save_model;
     
     [pre_results,posterior] = predict(model,test_data');
@@ -26,7 +26,7 @@ elseif strcmp(method, 'SVM')
 %     Mdl = SVMModel.Trained{1};
 
     % load example models
-    load(strcat('./data/real_data/Chen_data/late_stage_training/result/enh/SVM/example_models/SVMmodel_',num2str(j)));
+    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/SVM/example_models/SVMmodel_',num2str(j)));
     Mdl = save_model;
 
     [pre_labels,neg_loss, pre_score, posterior] = predict(Mdl,test_data','Options',options);
@@ -54,7 +54,7 @@ elseif strcmp(method, 'MLP')
 %     [net,tr] = train(net,train_data,gt_onehot);
     
     % load example models
-    load(strcat('./data/real_data/Chen_data/late_stage_training/result/enh/MLP/example_models/MLPmodel_',num2str(j)));
+    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/MLP/example_models/MLPmodel_',num2str(j)));
     net = save_model;
     
     posterior = sim(net,test_data);

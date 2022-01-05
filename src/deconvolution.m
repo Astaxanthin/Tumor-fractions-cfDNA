@@ -27,9 +27,11 @@ param.generate_sample_num = 1000;
 
 
 %% deconvolution on simulation dataset
-dataset_name = 'simulation_data';
+dataset_name = 'simulation_dataset';
 train_file_name = strcat(dataset_name,'/cnv_0/');
-load(strcat(data_root,train_file_name,'train_data.mat'));
+load(strcat(data_root,train_file_name,'train_data_part_1.mat'));
+load(strcat(data_root,train_file_name,'train_data_part_2.mat'));
+train_data = [train_data_part_1,train_data_part_2];
 load(strcat(data_root,train_file_name,'train_theta.mat'));
 train_save_add = strcat(data_root,train_file_name,'results/');
 mkdir(train_save_add);
@@ -45,7 +47,9 @@ save(save_name, 'reference_U');
 cnv = 0.3; % choose a cnv event
 
 test_file_name = strcat(dataset_name,'/cnv_',num2str(cnv),'/');
-load(strcat(data_root,test_file_name,'test_data.mat'));
+load(strcat(data_root,test_file_name,'test_data_part_1.mat'));
+load(strcat(data_root,test_file_name,'test_data_part_2.mat'));
+test_data = [test_data_part_1,test_data_part_2];
 load(strcat(data_root,test_file_name,'test_theta.mat'));
 test_save_add = strcat(data_root,test_file_name, 'Our_results/');
 mkdir(test_save_add);
