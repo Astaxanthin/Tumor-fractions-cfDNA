@@ -1,14 +1,16 @@
-function [posterior, pre_labels, bayes_prob, bayes_labels, save_Model] = BayesDiagnosis(train_data, gt_label, test_data, method, train_V_without_label, test_V_without_label, param, j)
+function [posterior, pre_labels, bayes_prob, bayes_labels, save_Model] = BayesDiagnosis(train_data, gt_label, test_data, method, train_V_without_label, test_V_without_label, param, j, train_flag)
 
 
 if strcmp(method, 'RF')
     
     % RF training
-%     model = TreeBagger(100, train_data', gt_label', 'Method','classification');
-    
-    % load example models
-    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/RF/example_models/RFmodel_',num2str(j)));
-    model = save_model;
+    if train_flag
+        model = TreeBagger(100, train_data', gt_label', 'Method','classification');
+    else
+        % load example models
+        load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/RF/example_models/RFmodel_',num2str(j)));
+        model = save_model;
+    end
     
     [pre_results,posterior] = predict(model,test_data');
     pre_labels = zeros(size(pre_results,1),1);
@@ -22,40 +24,45 @@ elseif strcmp(method, 'SVM')
     options = statset('UseParallel',true);
     
     % SVM training
-%     SVMModel = fitcecoc(train_data',gt_label,'Options',options,'Learners',t, 'FitPosterior',true,'Holdout',0.15);
-%     Mdl = SVMModel.Trained{1};
-
+    if train_flag
+        SVMModel = fitcecoc(train_data',gt_label,'Options',options,'Learners',t, 'FitPosterior',true,'Holdout',0.15);
+        Mdl = SVMModel.Trained{1};
+    else
     % load example models
-    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/SVM/example_models/SVMmodel_',num2str(j)));
-    Mdl = save_model;
-
+        load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/SVM/example_models/SVMmodel_',num2str(j)));
+        Mdl = save_model;
+    end
+    
     [pre_labels,neg_loss, pre_score, posterior] = predict(Mdl,test_data','Options',options);
     save_Model = Mdl;
     
 elseif strcmp(method, 'MLP')
     
     % MLP training
-%     gt_onehot = zeros(param.class_num,size(train_data,2));
-%     for i = 1:size(train_data,2)
-%         gt_onehot(gt_label(i),i) = 1;
-%     end
-%     trainFcn = 'trainscg';  % Scaled conjugate gradient backpropagation.
-%     
-%     % Create a Pattern Recognition Network
-%     hiddenLayerSize = 10;
-%     net = patternnet(hiddenLayerSize, trainFcn);
-%     
-%     % Setup Division of Data for Training, Validation, Testing
-%     net.divideParam.trainRatio = 70/100;
-%     net.divideParam.valRatio = 15/100;
-%     net.divideParam.testRatio = 15/100;
-%     
-%     % Train the Network
-%     [net,tr] = train(net,train_data,gt_onehot);
+    if train_flag
+        gt_onehot = zeros(param.class_num,size(train_data,2));
+        for i = 1:size(train_data,2)
+            gt_onehot(gt_label(i),i) = 1;
+        end
+        trainFcn = 'trainscg';  % Scaled conjugate gradient backpropagation.
+
+        % Create a Pattern Recognition Network
+        hiddenLayerSize = 10;
+        net = patternnet(hiddenLayerSize, trainFcn);
+
+        % Setup Division of Data for Training, Validation, Testing
+        net.divideParam.trainRatio = 70/100;
+        net.divideParam.valRatio = 15/100;
+        net.divideParam.testRatio = 15/100;
+
+        % Train the Network
+        [net,tr] = train(net,train_data,gt_onehot);
     
+    else
     % load example models
-    load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/MLP/example_models/MLPmodel_',num2str(j)));
-    net = save_model;
+        load(strcat('../data/real_dataset/Chen_data/late_stage_training/result/enh/MLP/example_models/MLPmodel_',num2str(j)));
+        net = save_model;
+    end
     
     posterior = sim(net,test_data);
     [~,pre_labels] = max(posterior,[],1);
